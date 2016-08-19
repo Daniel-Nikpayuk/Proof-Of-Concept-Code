@@ -121,9 +121,13 @@ to the standard grammar *explicit specialization* where you can *force* a versio
 If we look again at the **template.cpp** code, it would look something like this:
 
 > template &lt;&gt;
+>
 > size\_type godel&lt;0,1,2,3,4,5&gt;::encoding(size\_type x)
+>
 > {
+>
 >	return (0+1+2+3+4+5) \* x;
+>
 > }
 
 Again, having used macros, it looks a bit different, but only as a more automated approach at explicitly specializing
