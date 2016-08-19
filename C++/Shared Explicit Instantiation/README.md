@@ -111,17 +111,17 @@ with the declaration and simply assumes a definition exists elsewhere. Then, whe
 the compiler doesn't yet know a true definition is needed elsewhere, so it doesn't actually create one. So both
 object files are created independently of each other, but when the linker goes to link them, it discovers there is
 a table of contents reference to the needed template, but no actual code to go along with it. It's like having
-a table of contents where one whole chapter is said to be there but isn't actually there.
+a table of contents where one whole chapter is said to be there but actually isn't.
 
 ### header declaration vs. source definition
 
-This is a known problem, so one solution added to the language standard was to allow for *explicit specialization* where
-you can *force* a version of an otherwise promised template definition.
+This template linking subtlety is a known problem, and those who maintain the language as their solution have added
+to the standard grammar *explicit specialization* where you can *force* a version of an otherwise promised template definition.
 
 If we look again at the **template.cpp** code, it would look something like this:
 
-> template &lt; &gt;
-> size\_type godel &lt; 0,1,2,3,4,5 &gt; ::encoding(size\_type x)
+> template &lt;&gt;
+> size\_type godel &lt;0,1,2,3,4,5&gt; :: encoding(size\_type x)
 > {
 >	return (0+1+2+3+4+5)\*x;
 > }
