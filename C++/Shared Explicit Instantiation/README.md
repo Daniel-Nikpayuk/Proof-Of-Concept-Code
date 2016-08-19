@@ -118,7 +118,7 @@ a table of contents where one whole chapter is said to be there but actually isn
 This template linking subtlety is a known problem, and those who maintain the language as their solution have added
 to the standard grammar *explicit specialization* where you can *force* a version of an otherwise promised template definition.
 
-If we look again at the **template.cpp** code, it would look something like this:
+If we look again at the **template.cpp** code, one such explicit specialization would look something like this:
 
 > template &lt;&gt;
 >
@@ -130,18 +130,20 @@ If we look again at the **template.cpp** code, it would look something like this
 >
 > }
 
-Again, having used macros, it looks a bit different, but only as a more automated approach at explicitly specializing
-so many variants.
+Again, having used macros, it looks a bit different in the file itself, and the fact that I streamlined the numeric computation
+(which the compiler would resolve at compile-time anyway).
 
-Otherwise, the typical solution to this problem is to both declare and define the template in the same file
-(no separate header and source file, just a header file).
-
-I myself usually define the content details inline (within the declaration itself; which additionally modifies compiler
-optimizations). This approach could have been taken here, the only problem with that is the roughly 46,000 variants of template
-code the compiler would have to parse. It's unlikely most of those template variants would even be used, no harm no foul,
-but the compiler still goes through that code looking for syntax errors, and with such a large code base, the compiler
-tends to choke. My g++ compiler takes a few minutes to run through all of that, and that is just not practical to do
-every single time you want to make a small change.
+Otherwise, without explicit specialization, the typical solution to this problem is to both declare and define the
+template in the same file---no separate header and source file, just a header file.  In such cases, I myself usually
+define the content details inline (within the declaration itself).  This approach could have been taken here,
+the only problem with that is the 3,000+ variants of template code the compiler would have to parse.
+It's unlikely most of those template variants would even be used, no harm no foul, but the compiler still goes
+through that code looking for syntax errors, and with such a large code base, the compiler tends to choke.
+Not in the sense that it crashes, but my g++ compiler for example takes many seconds to run through all of that,
+and if you're relying on this style of programming the wait time is only going to get worse. The *map* operator
+I was building is actually part of a larger template library which adheres to this style. It's okay if you only
+have to compile every once and a while, but if you're prototyping, feedback is a good thing and having to wait
+all that extra time every time you make a small change in your code is unproductive and demoralizing.
 
 This is why we again split it up into separate header and source files. Explicit Specialization allows us to do that.
 By declaring our template structure and declaring its member functions in the template.h header file, we have provided
