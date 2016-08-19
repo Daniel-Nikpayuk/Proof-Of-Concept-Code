@@ -23,7 +23,6 @@ Let's look at part of the [**template.h**](template.h) header file for starters:
 
 > typedef unsigned size\_type;
 >
->
 > template &lt; size\_type N0 , size\_type N1 , size\_type N2 , size\_type N3 , size\_type N4 , size\_type N5 &gt;
 >
 > struct sum { ... };
@@ -59,19 +58,23 @@ template header.
 Keep in mind we don't need to *define* a function for each signature, only the ones we know we will use,
 though we'll get to that.
 
-Preprocessing Macros
+Preprocessor Macros
 --------------------
 
 Let's now look at the [**template.cpp**](template.cpp) file. You'll notice the use of a lot of macros.
+
+> #define declare5(N0, N1, N2, N3, N4, N5)
+>
+> #define declare4(N0, N1, N2, N3, N4)
 
 This isn't absolutely necessary for this idiomatic approach, but in a lot of ways it's preferred.
 This exact example is artificial, if you look at the algorithm itself, it's not the most useful function,
 but it's simple and it still demonstrates the point overall.
 
-The main use of macros is to quickly build a large repertoire of code, which I have done in this file. There are 6
+The main use of macros here is to quickly build a large repertoire of code, which I have done in this file. There are 6
 macro arguments and each takes 6 values, so 6^6 = 46,656 distinct functions are produced. Actually that's not true
-given the exact nature of the function defined, but let's pretend otherwise. At the very least there are a lot distinct
-functions.
+given the exact nature of the function defined (the commutative law holds for addition, so 0+1+0+0+0+0 == 1+0+0+0+0+0
+for example), but let's pretend otherwise. At the very least there are a lot distinct functions.
 
 Explicit Specialization
 -----------------------
