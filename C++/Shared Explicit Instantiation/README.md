@@ -19,11 +19,12 @@ My solution is to use template parameters to explicitly specialize each variant 
 Enumeration values as Template parameters
 -----------------------------------------
 
-Let's look at the [**template.h**](template.h) header file for starters:
+Let's look at part of the [**template.h**](template.h) header file for starters:
 
 > typedef unsigned size\_type;
 >
 > template &lt; size\_type N0 , size\_type N1 , size\_type N2 , size\_type N3 , size\_type N4 , size\_type N5 &gt;
+> { ... }
 
 By declaring integer values (here "unsigned") as the template parameter type, I can call the template by means
 of named *enum* values thus making my inventory naming system more human readable.
