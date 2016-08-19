@@ -1,7 +1,7 @@
 Shared Explicit Instantiation
 =============================
 
-What's the best way to index an inventory of similar functions within the same namespace without naming collisions ?
+How to scale the reuse of a function *name* without worry of naming collisions?
 
 This problem arose for me while trying to implement a theoretically complete version of the
 list *map* operator (within the functional paradigm). My model has 9 configuration parameters based on things
