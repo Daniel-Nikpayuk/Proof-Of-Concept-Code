@@ -5,9 +5,10 @@ How to scale the reuse of a function *name* without worry of naming collisions?
 
 This problem arose for me while trying to implement a theoretically complete version of the
 list *map* operator (within the functional paradigm). My model has 9 configuration parameters based on things
-like whether I want the map to iterate forward or backward, whether I'm allocating memory or it is assumed to exist.
-Each parameter has between 2-4 options, and in total this has left me with several thousand variants of what is otherwise
-the same algorithmic pattern.
+like whether I want the map to iterate forward or backward over the list; what type of pointer I'm working with
+(array, singly linked, doubly linked); whether I'm allocating memory or it is assumed to already exist or if
+I want to deallocate the input list as I go; etc.  Each parameter has between 2-4 options, and in total this
+has left me with several thousand variants of what is otherwise the same algorithmic pattern.
 
 As you can see, there are situations where it is not at all practical to name each and every function differently by hand,
 so what are some good ways to otherwise do so which scale ?
