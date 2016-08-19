@@ -16,7 +16,7 @@ function differently by hand or imagination when there are that many, it doesn't
 
 My solution is to use template parameters to explicitly specialize each variant function comprising the inventory. Here's why:
 
-##### enumeration values as template parameters
+### enumeration values as template parameters
 
 Let's look at part of the [**template.h**](template.h) header file for starters:
 
@@ -29,7 +29,7 @@ Let's look at part of the [**template.h**](template.h) header file for starters:
 By declaring integer values (here "unsigned long") as the template parameter type, I can call the template by means
 of named *enum* values thus making my inventory naming system much more human readable.
 
-##### declaring a templated structure instead of a templated function
+### declaring a templated structure instead of a templated function
 
 You may have noticed we're defining functions, but instead of templating functions we are templating classes,
 or equivalently *struct*s.  This is technically a hack, but I have a few good reasons for it.
@@ -56,7 +56,7 @@ template header.
 Keep in mind we don't need to *define* a function for each signature, only the ones we know we will use,
 though we'll get to that.
 
-##### preprocessor macros
+### preprocessor macros
 
 Let's now look at the [**template.cpp**](template.cpp) file. You'll notice the use of a lot of macros.
 
@@ -72,7 +72,7 @@ The main use of macros here is to quickly build a large repertoire of code, whic
 macro arguments and each takes 6 values, so 5^5 = 3,125 distinct functions are produced. The *map* example mentioned
 above had more.
 
-##### explicit specialization
+### explicit specialization
 
 If you've ever done template programming, you'll know there are *linking* subtleties that arise due to the special nature
 of how templates actually work.
@@ -110,7 +110,7 @@ object files are created independently of each other, but when the linker goes t
 a table of contents reference to the needed template, but no actual code to go along with it. It's like having
 a table of contents where one whole chapter is said to be there but isn't actually there.
 
-##### header declaration vs. source definition
+### header declaration vs. source definition
 
 This is a known problem, so one solution added to the language standard was to allow for *explicit specialization* where
 you can *force* a version of an otherwise promised template definition.
