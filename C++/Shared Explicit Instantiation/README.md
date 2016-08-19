@@ -24,7 +24,7 @@ Let's look at part of the [**template.h**](template.h) header file for starters:
 > typedef unsigned size\_type;
 >
 > template &lt; size\_type N0 , size\_type N1 , size\_type N2 , size\_type N3 , size\_type N4 , size\_type N5 &gt;
-> { ... }
+> struct { ... }
 
 By declaring integer values (here "unsigned") as the template parameter type, I can call the template by means
 of named *enum* values thus making my inventory naming system more human readable.
@@ -32,19 +32,20 @@ of named *enum* values thus making my inventory naming system more human readabl
 Declaring a templated structure instead of a templated function
 ---------------------------------------------------------------
 
-This is technically a hack, but I have a few good reasons for it.
+You may have noticed we're defining functions, but instead of templating functions we are templating classes,
+or equivalently *struct*s.  This is technically a hack, but I have a few good reasons for it.
 
 First of all, I use the *struct* as a way of providing namespace scope. Thus you can declare the function within.
 The proper alternative is to use an actual *namespace* declaration, but structs provide the other benefit that they
 themselves are recognized as types, which means they can be passed as template parameters to other templated objects.
-This I have found to be quite useful.
+This I have found to be quite useful as a general strategy for many programming contexts.
 
-More importantly, the nature of your functions when taking this approach will likely have small variations in their
-argument list as well. For example with my above *map* I had some versions which took a "size\_type & count" variable
-as input while other variations of the map operator did not. At the same time, some variations had the same input args,
-but varied internally within the algorithm itself. In such a case, those functions having the same *signature* would not
-be distinguishable by the compiler which would complain. Taking a templated struct approach solves this issue, though
-the solution as to why may not yet be clear.
+More importantly, the nature of your functions when taking this approach will likely be that they have small variations
+in their code body, but also in their argument list as well. For example with my above *map* example I had some versions
+which took a "size\_type & count" variable as input while other variations of the map operator did not. At the same time,
+some variations had the same input args, but varied internally within the algorithm itself. In such a case, those functions
+having the same *signature* would not be distinguishable by the compiler which would complain. Taking a templated struct
+approach solves this issue, though the solution as to why may not yet be clear.
 
 The downside of declaring the main template as a struct is that we have to *declare* each function signature within this
 template header. Keep in mind we don't need to *define* a function for each signature, only the ones we know we will use,
