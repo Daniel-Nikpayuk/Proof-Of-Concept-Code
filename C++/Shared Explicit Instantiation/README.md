@@ -105,8 +105,8 @@ It says that as soon as an actual instance of the template (one with all its par
 actual code, then it will create that true definition.
 
 The subtle linking problem ends up being a problem of assumption. If for example you call the template in the
-**main.cpp** file, it'll check the template table of contents (template.h) to see if the declaration is there.
-Then, when compiling the **main.cpp** file into an object file, having checked the template.h file, it says it's satisfied
+**main.cpp** file, it'll check the template table of contents **template.h** to see if the declaration is there.
+Then, when compiling the **main.cpp** file into an object file, having checked the **template.h** file, it says it's satisfied
 with the declaration and simply assumes a definition exists elsewhere. Then, when compiling the **template.cpp** file,
 the compiler doesn't yet know a true definition is needed elsewhere, so it doesn't actually create one. So both
 object files are created independently of each other, but when the linker goes to link them, it discovers there is
@@ -146,16 +146,19 @@ have to compile every once and a while, but if you're prototyping, feedback is a
 all that extra time every time you make a small change in your code is unproductive and demoralizing.
 
 This is why we again split it up into separate header and source files. Explicit Specialization allows us to do that.
-By declaring our template structure and declaring its member functions in the template.h header file, we have provided
+By declaring our template structure and declaring its member functions in the **template.h** header file, we have provided
 an acceptable table of contents telling any files which use this module what it can expect.
 
 We then define only those explicit specialization instances we know we will use in advance in the source file.
-In our case, given the nature of this construct (how we're using it to scale namespacing), we're interested in
-every variant, so it's simple.
+In our case, given the nature of this construct (how we're using it to scale namespacing), our parameter list
+doesn't vary in its type, and we're interested in every variant in a particular range, so it's simple.
 
-So with this we can return to the object modularization approach in compiling: We now compile this **template.cpp**
-file as an object file. It still takes minutes, but you only need to do it once. Then for example, looking at the
-[**main.cpp**](main.cpp) file we include the template.h table of contents (which the compiler parses with ease unlike
-its **template.cpp** counterpart), and thus we can declare a call to any given function with our inventory, one which
-compiles in no time.
+So with this we can return to the modularization approach in compiling: We now compile this **template.cpp**
+file as an object file. It still takes several seconds (would be minutes for a larger inventory),
+but you only need to do it once. Then for example, looking at the [**main.cpp**](main.cpp) file we include
+the **template.h** table of contents (which the compiler parses in no time at all unlike
+its **template.cpp** counterpart), and thus we can make a call to any given function within our inventory,
+using the same name for all functions, not having to worry about name collisions.
+
+Good stuff.
 
