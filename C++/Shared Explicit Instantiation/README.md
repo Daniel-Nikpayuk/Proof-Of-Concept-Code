@@ -19,7 +19,7 @@ My solution is to use template parameters to explicitly specialize each variant 
 Enumeration values as Template parameters
 -----------------------------------------
 
-Let's look at the [template.h](**template.h**) header file for starters:
+Let's look at the [./template.h](template.h) header file for starters:
 
 > typedef unsigned size\_type;
 >
