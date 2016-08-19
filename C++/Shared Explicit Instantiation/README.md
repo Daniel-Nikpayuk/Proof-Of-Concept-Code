@@ -122,11 +122,11 @@ If we look again at the **template.cpp** code, it would look something like this
 
 > template &lt;&gt;
 >
-> size\_type godel&lt;0,1,2,3,4,5&gt;::encoding(size\_type x)
+> size\_type godel&lt;1,1,1,1,2&gt;::encoding()
 >
 > {
 >
->	return (0+1+2+3+4+5) \* x;
+>	return 25410;
 >
 > }
 
