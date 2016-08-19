@@ -23,7 +23,7 @@ Let's look at the [**template.h**](template.h) header file for starters:
 
 > typedef unsigned size\_type;
 >
-> template&lt;size\_type N0, size\_type N1, size\_type N2, size\_type N3, size\_type N4, size\_type N5&gt;
+> template &lt; size\_type N0 , size\_type N1 , size\_type N2 , size\_type N3 , size\_type N4 , size\_type N5 &gt;
 
 By declaring integer values (here "unsigned") as the template parameter type, I can call the template by means
 of named *enum* values thus making my inventory naming system more human readable.
@@ -110,8 +110,8 @@ you can *force* a version of an otherwise promised template definition.
 
 If we look again at the **template.cpp** code, it would look something like this:
 
-> template&lt;&gt;
-> size\_type sum&lt;0,1,2,3,4,5:&gt;:function(size\_type x)
+> template &lt; &gt;
+> size\_type sum &lt; 0,1,2,3,4,5 &gt; ::function(size\_type x)
 > {
 >	return (0+1+2+3+4+5)\*x;
 > }
