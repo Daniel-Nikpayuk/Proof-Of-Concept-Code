@@ -23,7 +23,9 @@ Let's look at part of the [**template.h**](template.h) header file for starters:
 
 > typedef unsigned size\_type;
 >
+>
 > template &lt; size\_type N0 , size\_type N1 , size\_type N2 , size\_type N3 , size\_type N4 , size\_type N5 &gt;
+>
 > struct sum { ... };
 
 By declaring integer values (here "unsigned") as the template parameter type, I can call the template by means
@@ -51,6 +53,7 @@ The downside of declaring the main template as a struct is that we have to *decl
 template header.
 
 > static size\_type function();
+>
 > static size\_type function(size\_type x);
 
 Keep in mind we don't need to *define* a function for each signature, only the ones we know we will use,
