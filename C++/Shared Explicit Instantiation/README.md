@@ -35,16 +35,19 @@ You may have noticed we're defining functions, but instead of templating functio
 or equivalently *struct*s.  This is technically a hack, but I have a few good reasons for it.
 
 First of all, I use the *struct* as a way of providing namespace scope. Thus you can declare the function within.
+This is also why I declare the function as static, telling the compiler that each instance of the struct shares
+the same function, and more importantly, it can now be called without actually instantiating a class.
+
 The proper alternative is to use an actual *namespace* declaration, but structs provide the other benefit that they
 themselves are recognized as types, which means they can be passed as template parameters to other templated objects.
-This I have found to be quite useful as a general strategy for many programming contexts.
+This I have found to be quite useful as a general strategy for many other programming contexts.
 
 More importantly, the nature of your functions when taking this approach will likely be that they have small variations
-in their code body, but also in their argument list as well. For example with my above *map* example I had some versions
+in their code body, but also in their code header as well. For example with my above *map* I had some versions
 which took a "size\_type & count" variable as input while other variations of the map operator did not. At the same time,
 some variations had the same input args, but varied internally within the algorithm itself. In such a case, those functions
 having the same *signature* would not be distinguishable by the compiler which would complain. Taking a templated struct
-approach solves this issue, though the solution as to why may not yet be clear.
+approach solves this issue, though the solution as to why may not yet be fully clear.
 
 The downside of declaring the main template as a struct is that we have to *declare* each function signature within this
 template header.
@@ -68,8 +71,8 @@ This isn't absolutely necessary for this idiomatic approach, but in a lot of way
 This exact example is artificial, if you look at the algorithm itself, it's not the most useful function,
 but it's simple and it still demonstrates the point overall.
 
-The main use of macros here is to quickly build a large repertoire of code, which I have done in this file. There are 6
-macro arguments and each takes 6 values, so 5^5 = 3,125 distinct functions are produced. The *map* example mentioned
+The main use of macros here is to quickly build a large repertoire of code, which I have done in this file. There are
+5 macro arguments and each takes 5 values, so 5^5 = 3,125 distinct functions are produced. The *map* example mentioned
 above had more.
 
 ### explicit specialization
@@ -81,7 +84,7 @@ When writing non-template code, each module of code is actually split up into tw
 provide declarations, and source files (.cpp) where you provide actual definitions. Headers are like *tables of content*
 while sources are like the actual *content*.
 
-When compiling non-templated C++ code, to tell the compiler to compile a given .cpp file. It looks at that file, and
+When compiling non-templated C++ code, to tell the compiler to compile a given .cpp file it looks at that file, and
 it looks at the .h equivalent, and makes sure they're in agreement. The table of contents says certain structures and
 functions with particular signatures should exist within the content itself, and so the content source file should match.
 Aside from that, for each separate .cpp file the compiler turns them into what are called object files (machine code),
@@ -96,15 +99,15 @@ code within another, it only needs to see its table of contents (which is smalle
 to do some type checking, trying to catch bugs and all that.
 
 This is good practice, but it wasn't designed with templates in mind---template came after.  If you did things in the
-conventional way then you would split up a template into its declaration and its definition the way you would with regular
-C++ code. Unfortunately a template definition is not a true definition, it is kind of like a *promise* of a definition.
+conventional way but with templates, you would split it up into its declaration and its definition the same way.
+Unfortunately a template definition is not a true definition, it is kind of like a *promise* of a definition.
 It says that as soon as an actual instance of the template (one with all its parameters clearly assigned) is called in
 actual code, then it will create that true definition.
 
 The subtle linking problem ends up being a problem of assumption. If for example you call the template in the
-[**main.cpp**](main.cpp) file, it'll check the template table of contents (template.h) to see if the declaration is there.
-Then, when compiling the main.cpp file into an object file, having checked the template.h file, it says it's satisfied
-with the declaration and simply assumes a definition exists elsewhere. Then, when compiling the template.cpp file,
+**main.cpp** file, it'll check the template table of contents (template.h) to see if the declaration is there.
+Then, when compiling the **main.cpp** file into an object file, having checked the template.h file, it says it's satisfied
+with the declaration and simply assumes a definition exists elsewhere. Then, when compiling the **template.cpp** file,
 the compiler doesn't yet know a true definition is needed elsewhere, so it doesn't actually create one. So both
 object files are created independently of each other, but when the linker goes to link them, it discovers there is
 a table of contents reference to the needed template, but no actual code to go along with it. It's like having
@@ -144,8 +147,9 @@ We then define only those explicit specialization instances we know we will use 
 In our case, given the nature of this construct (how we're using it to scale namespacing), we're interested in
 every variant, so it's simple.
 
-So with this we can return to the object modularization approach in compiling: We now compile this template.cpp file
-as an object file. It still takes minutes, but you only need to do it once. Then for example, looking at the **main.cpp**
-file we include the template.h table of contents (which the compiler parses with ease unlike its template.cpp counterpart),
-and thus we can declare a call to any given function with our inventory, one which compiles in no time.
+So with this we can return to the object modularization approach in compiling: We now compile this **template.cpp**
+file as an object file. It still takes minutes, but you only need to do it once. Then for example, looking at the
+[**main.cpp**](main.cpp) file we include the template.h table of contents (which the compiler parses with ease unlike
+its **template.cpp** counterpart), and thus we can declare a call to any given function with our inventory, one which
+compiles in no time.
 
