@@ -4,11 +4,11 @@ Shared Explicit Instantiation
 How to scale the reuse of a function *name* without worry of naming collisions?
 
 This problem arose for me while trying to implement a theoretically complete version of the
-list *map* operator (within the functional paradigm). My model has 9 configuration parameters based on things
-like whether I want the map to iterate forward or backward over the list; what type of pointer I'm working with
-(array, singly linked, doubly linked); whether I'm allocating memory or it is assumed to already exist or if
-I want to deallocate the input list as I go; etc.  Each parameter has between 2-4 options, and in total this
-has left me with several thousand variants of what is otherwise the same algorithmic pattern.
+list *map* operator (within the functional programming paradigm). My model has 9 configuration parameters based
+on things like whether I want the map to iterate forward or backward over the list; what type of pointer I'm
+working with (array, singly linked, doubly linked); whether I'm allocating memory or it is assumed to already
+exist or if I want to deallocate the input list as I go; etc.  Each parameter has between 2-4 options,
+and in total this has left me with several thousand variants of what is otherwise the same algorithmic pattern.
 
 As you can see, there are situations where one has an inventory of functions which otherwise---intuitively---are
 thought to have the same name. How do you mitigate that then? It's not at all practical to name each and every
@@ -16,19 +16,18 @@ function differently by hand or imagination when there are that many, it doesn't
 
 My solution is to use template parameters to explicitly specialize each variant function comprising the inventory. Here's why:
 
-Enumeration values as Template parameters
------------------------------------------
+#Enumeration values as template parameters
 
 Let's look at part of the [**template.h**](template.h) header file for starters:
 
-> typedef unsigned size\_type;
+> typedef unsigned long size\_type;
 >
 > template &lt; size\_type N1 , size\_type N2 , size\_type N3 , size\_type N4 , size\_type N5 &gt;
 >
 > struct godel { ... };
 
-By declaring integer values (here "unsigned") as the template parameter type, I can call the template by means
-of named *enum* values thus making my inventory naming system more human readable.
+By declaring integer values (here "unsigned long") as the template parameter type, I can call the template by means
+of named *enum* values thus making my inventory naming system much more human readable.
 
 Declaring a templated structure instead of a templated function
 ---------------------------------------------------------------
