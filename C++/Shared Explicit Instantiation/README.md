@@ -10,8 +10,9 @@ like whether I want the map to iterate forward or backward over the list; what t
 I want to deallocate the input list as I go; etc.  Each parameter has between 2-4 options, and in total this
 has left me with several thousand variants of what is otherwise the same algorithmic pattern.
 
-As you can see, there are situations where it is not at all practical to name each and every function differently by hand,
-so what are some good ways to otherwise do so which scale ?
+As you can see, there are situations where one has an inventory of functions which otherwise---intuitively---are
+thought to have the same name. How do you mitigate that then? It's not at all practical to name each and every
+function differently by hand when there are that many, it doesn't scale. So how then do we solve this problem?
 
 My solution is to use template parameters to explicitly specialize each variant function within the inventory. Here's why:
 
