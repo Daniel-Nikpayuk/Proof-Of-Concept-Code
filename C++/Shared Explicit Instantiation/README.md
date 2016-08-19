@@ -23,9 +23,9 @@ Let's look at part of the [**template.h**](template.h) header file for starters:
 
 > typedef unsigned size\_type;
 >
-> template &lt; size\_type N0 , size\_type N1 , size\_type N2 , size\_type N3 , size\_type N4 , size\_type N5 &gt;
+> template &lt; size\_type N1 , size\_type N2 , size\_type N3 , size\_type N4 , size\_type N5 &gt;
 >
-> struct sum { ... };
+> struct godel { ... };
 
 By declaring integer values (here "unsigned") as the template parameter type, I can call the template by means
 of named *enum* values thus making my inventory naming system more human readable.
@@ -51,9 +51,9 @@ approach solves this issue, though the solution as to why may not yet be clear.
 The downside of declaring the main template as a struct is that we have to *declare* each function signature within this
 template header.
 
-> static size\_type function();
+> static size\_type encoding();
 >
-> static size\_type function(size\_type x);
+> static size\_type encoding(size\_type x);
 
 Keep in mind we don't need to *define* a function for each signature, only the ones we know we will use,
 though we'll get to that.
@@ -63,18 +63,17 @@ Preprocessor Macros
 
 Let's now look at the [**template.cpp**](template.cpp) file. You'll notice the use of a lot of macros.
 
-> \#define declare5(N0, N1, N2, N3, N4, N5)
+> \#define declare5(N1, N2, N3, N4, N5)
 >
-> \#define declare4(N0, N1, N2, N3, N4)
+> \#define declare4(N1, N2, N3, N4)
 
 This isn't absolutely necessary for this idiomatic approach, but in a lot of ways it's preferred.
 This exact example is artificial, if you look at the algorithm itself, it's not the most useful function,
 but it's simple and it still demonstrates the point overall.
 
 The main use of macros here is to quickly build a large repertoire of code, which I have done in this file. There are 6
-macro arguments and each takes 6 values, so 6^6 = 46,656 distinct functions are produced. Actually that's not true
-given the exact nature of the function defined (the commutative law holds for addition, so 0+1+0+0+0+0 == 1+0+0+0+0+0
-for example), but let's pretend otherwise. At the very least there are a lot distinct functions.
+macro arguments and each takes 6 values, so 5^5 = 3,125 distinct functions are produced. The *map* example mentioned
+above had more.
 
 Explicit Specialization
 -----------------------
@@ -124,7 +123,7 @@ you can *force* a version of an otherwise promised template definition.
 If we look again at the **template.cpp** code, it would look something like this:
 
 > template &lt; &gt;
-> size\_type sum &lt; 0,1,2,3,4,5 &gt; ::function(size\_type x)
+> size\_type godel &lt; 0,1,2,3,4,5 &gt; ::encoding(size\_type x)
 > {
 >	return (0+1+2+3+4+5)\*x;
 > }

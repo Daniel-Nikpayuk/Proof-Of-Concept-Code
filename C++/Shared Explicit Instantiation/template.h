@@ -15,12 +15,12 @@
 **
 ************************************************************************************************************************/
 
-typedef unsigned size_type;
+typedef unsigned long size_type;
 
-template<size_type N0, size_type N1, size_type N2, size_type N3, size_type N4, size_type N5>
-struct sum
+template<size_type N0, size_type N1, size_type N2, size_type N3, size_type N4>
+struct godel
 {
-	static size_type function();
-	static size_type function(size_type x);
+	static size_type encoding();
+	static size_type encoding(size_type x);
 };
 

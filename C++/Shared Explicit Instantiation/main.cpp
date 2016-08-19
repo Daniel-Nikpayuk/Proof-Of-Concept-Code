@@ -21,7 +21,7 @@
 
 int main(int argc, char *argv[])
 {
-	std::cout << sum<0,0,0,0,0,1>::function(3) << std::endl;
+	std::cout << godel<1,1,1,1,2>::encoding() << std::endl;
 
 	return 0;
 }
