@@ -24,7 +24,7 @@ Let's look at part of the [**template.h**](template.h) header file for starters:
 > typedef unsigned size\_type;
 >
 > template &lt; size\_type N0 , size\_type N1 , size\_type N2 , size\_type N3 , size\_type N4 , size\_type N5 &gt;
-> struct { ... }
+> struct sum { ... };
 
 By declaring integer values (here "unsigned") as the template parameter type, I can call the template by means
 of named *enum* values thus making my inventory naming system more human readable.
@@ -48,13 +48,18 @@ having the same *signature* would not be distinguishable by the compiler which w
 approach solves this issue, though the solution as to why may not yet be clear.
 
 The downside of declaring the main template as a struct is that we have to *declare* each function signature within this
-template header. Keep in mind we don't need to *define* a function for each signature, only the ones we know we will use,
+template header.
+
+> static size\_type function();
+> static size\_type function(size\_type x);
+
+Keep in mind we don't need to *define* a function for each signature, only the ones we know we will use,
 though we'll get to that.
 
 Preprocessing Macros
 --------------------
 
-Let's now look at the **template.cpp** file. You'll notice the use of a lot of macros.
+Let's now look at the [**template.cpp**](template.cpp) file. You'll notice the use of a lot of macros.
 
 This isn't absolutely necessary for this idiomatic approach, but in a lot of ways it's preferred.
 This exact example is artificial, if you look at the algorithm itself, it's not the most useful function,
@@ -96,7 +101,7 @@ It says that as soon as an actual instance of the template (one with all its par
 actual code, then it will create that true definition.
 
 The subtle linking problem ends up being a problem of assumption. If for example you call the template in the
-**main.cpp** file, it'll check the template table of contents (template.h) to see if the declaration is there.
+[**main.cpp**](main.cpp) file, it'll check the template table of contents (template.h) to see if the declaration is there.
 Then, when compiling the main.cpp file into an object file, having checked the template.h file, it says it's satisfied
 with the declaration and simply assumes a definition exists elsewhere. Then, when compiling the template.cpp file,
 the compiler doesn't yet know a true definition is needed elsewhere, so it doesn't actually create one. So both
