@@ -63,9 +63,9 @@ Preprocessor Macros
 
 Let's now look at the [**template.cpp**](template.cpp) file. You'll notice the use of a lot of macros.
 
-> #define declare5(N0, N1, N2, N3, N4, N5)
+> \#define declare5(N0, N1, N2, N3, N4, N5)
 >
-> #define declare4(N0, N1, N2, N3, N4)
+> \#define declare4(N0, N1, N2, N3, N4)
 
 This isn't absolutely necessary for this idiomatic approach, but in a lot of ways it's preferred.
 This exact example is artificial, if you look at the algorithm itself, it's not the most useful function,
