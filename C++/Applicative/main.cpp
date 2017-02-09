@@ -21,7 +21,7 @@
 
 int main(int argc, char *argv[])
 {
-	std::cout << apply<add, constant<2>, constant<3>>::value << std::endl;
+	std::cout << apply<subtract, constant<3>, constant<2>>::value << std::endl;
 
 	return 0;
 }

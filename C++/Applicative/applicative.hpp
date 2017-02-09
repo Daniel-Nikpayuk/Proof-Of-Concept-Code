@@ -27,7 +27,7 @@ struct apply<function, first, params...>
 	struct partial
 	{
 		template<size_type... args>
-		using lambda = typename function::template lambda<args..., first::value>;
+		using lambda = typename function::template lambda<first::value, args...>;
 	};
 
 	static constexpr size_type value = apply<partial, params...>::value;
@@ -43,14 +43,14 @@ struct constant { static constexpr size_type value = v; };
 
 //
 
-struct add
+struct subtract
 {
 	template<size_type...> struct lambda;
 
 	template<size_type x, size_type y>
 	struct lambda<x, y>
 	{
-		static constexpr size_type value = x + y;
+		static constexpr size_type value = x - y;
 	};
 };
 
