@@ -15,51 +15,14 @@
 **
 ************************************************************************************************************************/
 
-#include"dynamic.hpp"
+#include<iostream>
+
+#include"applicative.hpp"
 
 int main(int argc, char *argv[])
 {
-	#define DECLARE(p0, p1, p2, p3)											\
-		Adverb<p0 | p1 | p2 | p3> adv##p0##p1##p2##p3
-
-	#define CUBE(p0, p1, p2, p3)											\
-		cube(adv##p0##p1##p2##p3, 3)
-
-	#define CALL4(p0, p1, p2, p3)											\
-		DECLARE(p0,p1,p2,p3);											\
-		CUBE(p0,p1,p2,p3);
-
-	#define CALL3(p0, p1, p2)											\
-		CALL4(p0,p1,p2,1);											\
-		CALL4(p0,p1,p2,2);											\
-		CALL4(p0,p1,p2,4);											\
-		CALL4(p0,p1,p2,8);
-
-	#define CALL2(p0, p1)												\
-		CALL3(p0,p1,1);												\
-		CALL3(p0,p1,2);												\
-		CALL3(p0,p1,4);												\
-		CALL3(p0,p1,8);
-
-	#define CALL1(p0)												\
-		CALL2(p0,1);												\
-		CALL2(p0,2);												\
-		CALL2(p0,4);												\
-		CALL2(p0,8);
-
-	#define CALL()													\
-		CALL1(1);												\
-		CALL1(2);												\
-		CALL1(4);												\
-		CALL1(8);
-
-	CALL()
-
-//	Adverb<Assoc::omit_fun | Assoc::apply_count> adv;
-
-//	cube(adv, 3);
+	std::cout << apply<add, constant<2>, constant<3>>::value << std::endl;
 
 	return 0;
 }
-
 

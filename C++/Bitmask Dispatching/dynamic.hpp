@@ -85,41 +85,6 @@ value_type square(Dispatch<Assoc::apply_count> & a, value_type x)
 
 //
 
-
-/*
-template<size_type index>
-struct Cube
-{
-	struct omit
-	{
-		template<typename value_type>
-		static value_type cube(const Adverb<index> & a, value_type x)
-		{
-			return x*square(a.verb, x);
-		}
-	};
-
-	struct apply
-	{
-		template<typename value_type>
-		static value_type cube(Adverb<index> & a, value_type x)
-		{
-			++a.verb.count;
-
-			return x*square(a.verb, x);
-		}
-	};
-
-	using call = typename if_then_else
-	<
-		Adverb<index>::template is_member<Assoc::apply_count, index>::value,
-		apply,
-		omit
-
-	>::type;
-};
-*/
-
 template<size_type index>
 struct omit
 {
